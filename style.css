@@ -41,3 +41,12 @@ footer {
 .hide {
   display: none;
 }
+
+form {
+  display: flex;
+  gap:1rem
+}
+
+input {
+  border-radius: 5px;
+}
