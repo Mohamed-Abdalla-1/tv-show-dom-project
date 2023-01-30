@@ -5,8 +5,6 @@ function setup() {
 }
 
 function makePageForEpisodes(episodeList) {
-  // const rootElem = document.getElementById("root");
-  // rootElem.textContent = `Got ${episodeList.length} episode(s)`;
   let shows = getAllEpisodes().map((show) => {
     let container = document.createElement("a");
     container.href = show.url;
@@ -31,21 +29,16 @@ function makePageForEpisodes(episodeList) {
   let searchResult = document.getElementById("search");
   searchResult.addEventListener("input", (e) => {
     const value = e.target.value.toLowerCase();
+
+    let numberOfResult = 0;
     shows.forEach((show) => {
       const isVisible =
         show.name.toLowerCase().includes(value) ||
         show.summary.toLowerCase().includes(value);
       show.element.classList.toggle("hide", !isVisible);
+      if (isVisible) numberOfResult++;
     });
-    // document.getElementById("resultsCount").innerText = shows.filter((show)=>{
-    //   !show.element.classList.contains("hide")
-    // }).length
-
-    console.log(
-      shows.filter((show) => {
-        show.element.classList.contains("hide");
-      }).length
-    );
+    document.getElementById("resultsCount").innerText = numberOfResult;
   });
 }
 
