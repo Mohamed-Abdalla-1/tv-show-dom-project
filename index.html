@@ -10,17 +10,20 @@
 
   <body>
     <form action="" method="get">
-      <input type="text" id="search">
+      <select
+        id="episodes-selection"
+        onChange="window.location.href=this.value"
+      ></select>
+      <input type="text" id="search" />
       <p>Displaying <span id="resultsCount">73</span> /73 episodes</p>
     </form>
-    <div id="root">
-    </div>
+    <div id="root"></div>
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
     <!-- Loads YOUR javascript code -->
-    <footer>
+    <footer id="footer">
       <h2>Data come from <a href="https://www.tvmaze.com/">TVMaze.com</a></h2>
     </footer>
     <script src="script.js"></script>
