@@ -7,28 +7,50 @@ function setup() {
 function makePageForEpisodes(episodeList) {
   // const rootElem = document.getElementById("root");
   // rootElem.textContent = `Got ${episodeList.length} episode(s)`;
-  getAllEpisodes().forEach((element) => {
+  let shows = getAllEpisodes().map((show) => {
     let container = document.createElement("a");
-    container.href = element.url
-    container.target = "blank"
-    container.className = "container"
+    container.href = show.url;
+    container.target = "blank";
+    container.className = "container";
     const rootElem = document.getElementById("root");
     rootElem.appendChild(container);
     let showTitle = document.createElement("h1");
-    showTitle.innerText =
-      `${element.name} - S${twoDigitsPlaces(element.season)}E${twoDigitsPlaces(element.number)}`;
+    showTitle.innerText = `${show.name} - S${twoDigitsPlaces(
+      show.season
+    )}E${twoDigitsPlaces(show.number)}`;
     container.appendChild(showTitle);
     let showImage = document.createElement("img");
-    showImage.src = element.image.medium;
+    showImage.src = show.image.medium;
     container.appendChild(showImage);
     let showSummary = document.createElement("p");
-    showSummary.innerText = element.summary;
+    showSummary.innerText = show.summary;
     container.appendChild(showSummary);
+    return { name: show.name, summary: show.summary, element: container };
+  });
+
+  let searchResult = document.getElementById("search");
+  searchResult.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    shows.forEach((show) => {
+      const isVisible =
+        show.name.toLowerCase().includes(value) ||
+        show.summary.toLowerCase().includes(value);
+      show.element.classList.toggle("hide", !isVisible);
+    });
+    // document.getElementById("resultsCount").innerText = shows.filter((show)=>{
+    //   !show.element.classList.contains("hide")
+    // }).length
+
+    console.log(
+      shows.filter((show) => {
+        show.element.classList.contains("hide");
+      }).length
+    );
   });
 }
 
 function twoDigitsPlaces(num) {
-  return num < 10 ? "0" + num : num
+  return num < 10 ? "0" + num : num;
 }
 
 window.onload = setup;
