@@ -27,7 +27,7 @@ function makePageForEpisodes(episodeList) {
     showImage.src = show.image.medium;
     container.appendChild(showImage);
     let showSummary = document.createElement("p");
-    showSummary.innerText = show.summary;
+    showSummary.innerHTML = show.summary;
     container.appendChild(showSummary);
 
     return {
