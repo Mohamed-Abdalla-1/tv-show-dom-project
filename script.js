@@ -1,11 +1,13 @@
 //You can edit ALL of the code here
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  makePageForEpisodes();
 }
 
-function makePageForEpisodes(episodeList) {
-  let shows = getAllEpisodes().map((show) => {
+async function makePageForEpisodes() {
+  const request = await fetch("https://api.tvmaze.com/shows/82/episodes");
+  const promise = await request.json();
+
+  let shows = promise.map((show) => {
     let container = document.createElement("a");
     container.href = show.url;
     container.target = "blank";
