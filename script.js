@@ -69,6 +69,19 @@ async function makePageForEpisodes() {
     //           window.location.href=option.value
     // });
   });
+
+    let selectShow = document.getElementById("show-selection");
+
+    shows.forEach((show) => {
+      let showOption = document.createElement("option");
+
+      showOption.innerText = show.name;
+      selectShow.appendChild(showOption);
+
+      showOption.value = `#${show.showSeasonEpisode}`;
+
+    });
+
 }
 
 function twoDigitsPlaces(num) {

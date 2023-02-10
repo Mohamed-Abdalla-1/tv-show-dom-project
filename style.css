@@ -1,26 +1,37 @@
 #root {
-  color: red;
+  color: #f72585;
   display: grid;
   grid-template-columns: repeat(auto-fit, 300px);
-  /* grid-auto-columns: 300px; */
   grid-template-rows: auto;
-  gap: 1rem;
+  gap: 1.2rem;
   margin: 3rem;
   padding-bottom: 2rem;
   justify-content: center;
 }
 
 body {
-  background-color: blueviolet;
+  background-color: #7209b7;
+}
+
+form {
+  background-color: #3a0ca3;
+  padding: 1rem;
+}
+
+p {
+  color: #f72585;
+  text-shadow: 1px 1px 1px black;
+  letter-spacing: 0.05rem;
 }
 
 a {
   text-decoration: none;
+  color: #f72585;
 }
 
 .container {
   color: inherit;
-  background-color: blue;
+  background-color: #3a0ca3;
   text-align: center;
   padding: 1rem;
   height: auto;
@@ -29,13 +40,15 @@ a {
 }
 
 .container:hover {
-  box-shadow: 0px 0px 10px black;
+  box-shadow: 0px 0px 25px black;
 }
 
 footer {
   margin: 0 4rem;
-  border-top: 1px blue solid;
+  border-top: 2px #3a0ca3 solid;
   text-align: center;
+  padding: 2rem;
+  font-size: small;
 }
 
 .hide {
@@ -44,7 +57,7 @@ footer {
 
 form {
   display: flex;
-  gap:1rem
+  gap: 1rem;
 }
 
 input {
