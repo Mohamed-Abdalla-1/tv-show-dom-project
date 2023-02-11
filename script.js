@@ -1,19 +1,28 @@
 //You can edit ALL of the code here
-function setup() {
-  makePageForEpisodes();
+
+// async function episodesFetch() {
+//   const request = await fetch("https://api.tvmaze.com/shows/82/episodes");
+//   const promise = await request.json();
+//   return promise;
+// }
+
+async function setup() {
+  fetch("https://api.tvmaze.com/shows/82/episodes")
+    .then((request) => request.json())
+    .then((data) => {
+      makePageForEpisodes(data);
+    });
 }
 
-async function makePageForEpisodes() {
-  const request = await fetch("https://api.tvmaze.com/shows/82/episodes");
-  const promise = await request.json();
-
-  let shows = promise.map((show) => {
+function makePageForEpisodes(data) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
+  let shows = data.map((show) => {
     let container = document.createElement("a");
     container.href = show.url;
     container.target = "blank";
     container.className = "container";
 
-    const rootElem = document.getElementById("root");
     rootElem.appendChild(container);
 
     let SeasonEpisode = `S${twoDigitsPlaces(show.season)}E${twoDigitsPlaces(
@@ -69,20 +78,29 @@ async function makePageForEpisodes() {
     //           window.location.href=option.value
     // });
   });
-
-    let selectShow = document.getElementById("show-selection");
-
-    shows.forEach((show) => {
-      let showOption = document.createElement("option");
-
-      showOption.innerText = show.name;
-      selectShow.appendChild(showOption);
-
-      showOption.value = `#${show.showSeasonEpisode}`;
-
-    });
-
 }
+
+let selectShow = document.getElementById("show-selection");
+let tvShows = getAllShows();
+
+tvShows.forEach((show) => {
+  let showOption = document.createElement("option");
+
+  showOption.innerText = show.name;
+  selectShow.appendChild(showOption);
+
+  showOption.value = `${show.id}`;
+});
+
+selectShow.addEventListener("change", async (e) => {
+  let showId = e.target.value.toString();
+  const showsRequest = await fetch(
+    `https://api.tvmaze.com/shows/${showId}/episodes`
+  );
+  const showRespond = await showsRequest.json();
+  console.log(showRespond);
+  makePageForEpisodes(showRespond);
+});
 
 function twoDigitsPlaces(num) {
   return num < 10 ? "0" + num : num;
