@@ -8,20 +8,25 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
 
-  <body>
+  <body id="H">
     <header></header>
     <main>
       <form action="" method="get">
-        <select
-          id="show-selection"
-        ></select>
-        <select
-          id="episodes-selection"
-          onChange="window.location.href=this.value"
-        ></select>
+        <select id="show-selection">
+          <option value="shows-list">Shows ...</option>
+        </select>
+        <select id="episodes-selection">
+          <!-- <option value="" selected >Select Season & Episode...</option> -->
+        </select>
         <input type="text" id="search" />
-        <p>Displaying <span id="resultsCount">73</span> /73 episodes</p>
+        <p>
+          Displaying <span id="resultsCount">73</span> / <span
+            id="resultTotal"
+          ></span>
+
+        </p>
       </form>
+      <h1 id="current-display"></h1>
       <div id="root"></div>
     </main>
     <footer id="footer">
@@ -30,6 +35,7 @@
 
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
+    <script src="shows.js"></script>
 
     <!-- Loads YOUR javascript code -->
 
