@@ -94,23 +94,6 @@ function makePageForShows(data) {
     document.getElementById("resultsCount").innerText = numberOfResult;
   });
 
-  /////////
-  // let selectInput = document.getElementById("episodes-selection");
-  // selectInput.innerHTML = "";
-
-  // shows.forEach((show) => {
-  //   let selectionOption = document.createElement("option");
-
-  //   selectionOption.innerText = show.name;
-
-  //   selectInput.appendChild(selectionOption);
-
-  //   selectionOption.value = `${show.showId}`;
-  // });
-
-  // selectInput.addEventListener("change", (e) => {
-  //   window.location.href = "#" + e.target.value;
-  // });
   /////////////
   let selectShow = document.getElementById("show-selection");
 
@@ -126,6 +109,9 @@ function makePageForShows(data) {
   selectShow.addEventListener("change", async (e) => {
     window.location.href = "#" + e.target.value;
   });
+  //////////
+  let homePage = document.getElementById("back");
+  homePage.style.display = "none";
 }
 /////////
 function makePageForEpisodes(data) {
@@ -235,6 +221,12 @@ function makePageForEpisodes(data) {
       pageTitle.innerText = `${e.target.selectedOptions[0].text}`;
     }
   });
+  //////////////
+  let homePage = document.getElementById("back");
+  homePage.style.display = "block";
+  homePage.addEventListener("click", ()=>{
+    setup()
+  })
 }
 /////////
 // let selectShow = document.getElementById("show-selection");

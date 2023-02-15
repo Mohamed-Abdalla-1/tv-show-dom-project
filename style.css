@@ -63,3 +63,12 @@ form {
 input {
   border-radius: 5px;
 }
+
+#current-display {
+  text-align: center;
+  padding: 1rem;
+}
+
+#back {
+  cursor: pointer;
+}
