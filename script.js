@@ -67,7 +67,6 @@ function makePageForShows(data) {
       const respond = await request.json();
 
       makePageForEpisodes(respond);
-      // console.log(e.target);
       window.location.href = "#H";
       document.getElementById("show-selection").value = e.target.id;
       pageTitle.innerText = "";
@@ -75,6 +74,7 @@ function makePageForShows(data) {
     });
   });
   /////////
+  let selectShow = document.getElementById("show-selection");
   document.getElementById("resultTotal").innerText = 0;
   document.getElementById("resultTotal").innerText = data.length;
   document.getElementById("resultsCount").innerText = data.length;
@@ -92,22 +92,66 @@ function makePageForShows(data) {
       if (isVisible) numberOfResult++;
     });
     document.getElementById("resultsCount").innerText = numberOfResult;
+
+    ///
+    selectShow.innerHTML = "";
+    shows
+      .sort((a, b) =>
+        a.name.toLowerCase() < b.name.toLowerCase()
+          ? -1
+          : a.name.toLowerCase() > b.name.toLowerCase()
+          ? 1
+          : 0
+      )
+      .forEach((show) => {
+        if (!show.element.classList.contains("hide")) {
+          let showOption = document.createElement("option");
+
+          showOption.innerText = show.name;
+          selectShow.appendChild(showOption);
+
+          showOption.value = `${show.showId}`;
+        }
+      });
   });
 
   /////////////
-  let selectShow = document.getElementById("show-selection");
 
-  shows.forEach((show) => {
-    let showOption = document.createElement("option");
+  shows
+    .sort((a, b) =>
+      a.name.toLowerCase() < b.name.toLowerCase()
+        ? -1
+        : a.name.toLowerCase() > b.name.toLowerCase()
+        ? 1
+        : 0
+    )
+    .forEach((show) => {
+      if (!show.element.classList.contains("hide")) {
+        let showOption = document.createElement("option");
 
-    showOption.innerText = show.name;
-    selectShow.appendChild(showOption);
+        showOption.innerText = show.name;
+        selectShow.appendChild(showOption);
 
-    showOption.value = `${show.showId}`;
-  });
+        showOption.value = `${show.showId}`;
+      }
+    });
   // /////////
   selectShow.addEventListener("change", async (e) => {
-    window.location.href = "#" + e.target.value;
+    let showId = e.target.value;
+
+    if (showId === "shows-list") {
+      makePageForShows(getAllShows());
+    } else {
+      const showsRequest = await fetch(
+        `https://api.tvmaze.com/shows/${showId}/episodes`
+      );
+      const showRespond = await showsRequest.json();
+
+      makePageForEpisodes(showRespond);
+      const pageTitle = document.getElementById("current-display");
+      pageTitle.innerText = "";
+      pageTitle.innerText = `${e.target.selectedOptions[0].text}`;
+    }
   });
   //////////
   let homePage = document.getElementById("back");
@@ -194,15 +238,23 @@ function makePageForEpisodes(data) {
   ///////////
   let selectShow = document.getElementById("show-selection");
 
-  shows.forEach((show) => {
-    let showOption = document.createElement("option");
+  shows
+    .sort((a, b) =>
+      a.name.toLowerCase() < b.name.toLowerCase()
+        ? -1
+        : a.name.toLowerCase() > b.name.toLowerCase()
+        ? 1
+        : 0
+    )
+    .forEach((show) => {
+      let showOption = document.createElement("option");
 
-    showOption.innerText = show.name;
-    selectShow.appendChild(showOption);
+      showOption.innerText = show.name;
+      selectShow.appendChild(showOption);
 
-    showOption.value = `${show.id}`;
-    // showOption.id = `${show.name}`;
-  });
+      showOption.value = `${show.id}`;
+      // showOption.id = `${show.name}`;
+    });
   // /////////
   selectShow.addEventListener("change", async (e) => {
     let showId = e.target.value;
@@ -224,35 +276,11 @@ function makePageForEpisodes(data) {
   //////////////
   let homePage = document.getElementById("back");
   homePage.style.display = "block";
-  homePage.addEventListener("click", ()=>{
-    setup()
-  })
+  homePage.addEventListener("click", () => {
+    document.getElementById("show-selection").value = "shows-list";
+    setup();
+  });
 }
-/////////
-// let selectShow = document.getElementById("show-selection");
-// let tvShows = getAllShows();
-
-// tvShows.forEach((show) => {
-//   let showOption = document.createElement("option");
-
-//   showOption.innerText = show.name;
-//   selectShow.appendChild(showOption);
-
-//   showOption.value = `${show.id}`;
-// });
-// // /////////
-// selectShow.addEventListener("change", async (e) => {
-//   let showId = e.target.value.toString();
-//   if (showId === "shows-list") {
-//     makePageForShows(getAllShows());
-//   } else {
-//     const showsRequest = await fetch(
-//       `https://api.tvmaze.com/shows/${showId}/episodes`
-//     );
-//     const showRespond = await showsRequest.json();
-//     makePageForEpisodes(showRespond);
-//   }
-// });
 /////////
 function twoDigitsPlaces(num) {
   return num < 10 ? "0" + num : num;
